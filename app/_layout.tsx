@@ -10,8 +10,15 @@ const convex = new ConvexReactClient(process.env.EXPO_PUBLIC_CONVEX_URL!, {
 export default function RootLayout() {
   return (
     <ConvexProvider client={convex}>
-      <Stack>
-        <StatusBar />
+      <Stack
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: "black",
+          },
+          headerTintColor: "white",
+        }}
+      >
+        <StatusBar style="auto" />
         <Stack.Screen name="(tabs)" />
       </Stack>
     </ConvexProvider>

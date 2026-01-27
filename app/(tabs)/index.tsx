@@ -14,6 +14,8 @@ export default function Index() {
       }}
     >
       <ThemedText>Edit app/index.tsx to edit this screen.</ThemedText>
+
+      <ThemedView className="border border-red-500 p-8 h-4 w-4"></ThemedView>
       {tasks?.map(({ _id, text }) => (
         <ThemedText key={_id}>{text}</ThemedText>
       ))}

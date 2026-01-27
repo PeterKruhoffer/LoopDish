@@ -11,7 +11,7 @@ export default function TabLayout() {
         headerShown: false,
         tabBarButton: HapticTab,
         tabBarBackground: () => (
-          <ThemedView className="bg-black h-full w-full" />
+          <ThemedView className="h-full w-full" />
         ),
       }}
     >
