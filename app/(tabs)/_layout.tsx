@@ -1,7 +1,7 @@
 import { HapticTab } from "@/components/haptic-tab";
+import { ThemedView } from "@/components/themed-view";
 import { IconSymbol } from "@/components/ui/icon-symbol.ios";
 import { Tabs } from "expo-router";
-import { View } from "react-native";
 
 export default function TabLayout() {
   return (
@@ -10,7 +10,9 @@ export default function TabLayout() {
         tabBarActiveTintColor: "white",
         headerShown: false,
         tabBarButton: HapticTab,
-        tabBarBackground: () => <View className="bg-black h-full w-full" />,
+        tabBarBackground: () => (
+          <ThemedView className="bg-black h-full w-full" />
+        ),
       }}
     >
       <Tabs.Screen
