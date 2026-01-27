@@ -1,6 +1,7 @@
 import { ConvexProvider, ConvexReactClient } from "convex/react";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import { useCSSVariable } from "uniwind";
 import "../global.css";
 
 const convex = new ConvexReactClient(process.env.EXPO_PUBLIC_CONVEX_URL!, {
@@ -8,14 +9,17 @@ const convex = new ConvexReactClient(process.env.EXPO_PUBLIC_CONVEX_URL!, {
 });
 
 export default function RootLayout() {
+  const headerBackground = useCSSVariable("--color-header-background");
+  const headerText = useCSSVariable("--color-header-text");
+
   return (
     <ConvexProvider client={convex}>
       <Stack
         screenOptions={{
           headerStyle: {
-            backgroundColor: "black",
+            backgroundColor: headerBackground as string,
           },
-          headerTintColor: "white",
+          headerTintColor: headerText as string,
         }}
       >
         <StatusBar style="auto" />

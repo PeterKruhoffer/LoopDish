@@ -2,12 +2,15 @@ import { HapticTab } from "@/components/haptic-tab";
 import { ThemedView } from "@/components/themed-view";
 import { IconSymbol } from "@/components/ui/icon-symbol.ios";
 import { Tabs } from "expo-router";
+import { useCSSVariable } from "uniwind";
 
 export default function TabLayout() {
+  const tabActiveColor = useCSSVariable("--color-tab-active");
+
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: "white",
+        tabBarActiveTintColor: tabActiveColor as string,
         headerShown: false,
         tabBarButton: HapticTab,
         tabBarBackground: () => (

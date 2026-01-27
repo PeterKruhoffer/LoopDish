@@ -1,2 +1,18 @@
 @import 'tailwindcss';
 @import 'uniwind';
+
+@layer theme {
+  :root {
+    @variant dark {
+      --color-header-background: #000;
+      --color-header-text: #ECEDEE;
+      --color-tab-active: #fff;
+    }
+
+    @variant light {
+      --color-header-background: #fff;
+      --color-header-text: #11181C;
+      --color-tab-active: #000;
+    }
+  }
+}
