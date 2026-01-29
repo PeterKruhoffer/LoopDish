@@ -3,16 +3,20 @@
 
 @layer theme {
   :root {
+    --color-black: oklch(0% 0 0);
+    --color-white: oklch(100% 0 0);
+    --color-gray: oklch(45% 0 0);
+
     @variant dark {
-      --color-header-background: #000;
-      --color-header-text: #ECEDEE;
-      --color-tab-active: #fff;
+      --color-header-background: var(--color-black);
+      --color-header-text: var(--color-white);
+      --color-tab-active: var(--color-white);
     }
 
     @variant light {
-      --color-header-background: #fff;
-      --color-header-text: #11181C;
-      --color-tab-active: #000;
+      --color-header-background: var(--color-white);
+      --color-header-text: var(--color-black);
+      --color-tab-active: var(--color-black);
     }
   }
 }
