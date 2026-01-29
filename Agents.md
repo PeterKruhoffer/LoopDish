@@ -26,3 +26,12 @@ bunx expo start
 bunx convex dev 
 ```
 (will start convex server)
+
+## Available Skills
+
+This project has React Native skills available in `.opencode/skills/`. When working on React Native components, performance optimization, or component architecture:
+
+- Load `vercel-react-native-skills` for React Native best practices
+- Load `vercel-composition-patterns` for component composition patterns
+
+Use `/skill <name>` to load a skill before starting work.
