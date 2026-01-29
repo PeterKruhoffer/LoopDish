@@ -71,12 +71,12 @@ export const SuggestionCard = memo(function SuggestionCard({
             {(timesMade !== undefined || averageRating !== undefined) && (
               <View className="flex-row items-center gap-3 mt-1">
                 {timesMade !== undefined && (
-                  <Text className="text-xs text-[var(--color-gray)] uppercase tracking-wide">
+                  <Text className="text-xs text-(--color-gray) uppercase tracking-wide">
                     Made {timesMade} {timesMade === 1 ? "time" : "times"}
                   </Text>
                 )}
                 {averageRating !== undefined && (
-                  <Text className="text-xs text-[var(--color-gray)] uppercase tracking-wide">
+                  <Text className="text-xs text-(--color-gray) uppercase tracking-wide">
                     {averageRating.toFixed(1)}/5 avg
                   </Text>
                 )}

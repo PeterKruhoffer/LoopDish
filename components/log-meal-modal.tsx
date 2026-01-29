@@ -47,7 +47,7 @@ const DinnerSelectorItem = memo(function DinnerSelectorItem({
             {name}
           </Text>
           {category && (
-            <Text className="text-sm text-[var(--color-gray)] uppercase tracking-wide mt-1">
+            <Text className="text-sm text-(--color-gray) uppercase tracking-wide mt-1">
               {category}
             </Text>
           )}
@@ -107,7 +107,7 @@ export function LogMealModal({
 
   // Filter dinners
   const availableDinners = allDinners.filter(
-    (dinner) => !recentlyLoggedIds.includes(dinner._id)
+    (dinner) => !recentlyLoggedIds.includes(dinner._id),
   );
 
   // Filter by search
@@ -115,7 +115,7 @@ export function LogMealModal({
     ? availableDinners.filter(
         (d) =>
           d.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          (d.category?.toLowerCase() || "").includes(searchQuery.toLowerCase())
+          (d.category?.toLowerCase() || "").includes(searchQuery.toLowerCase()),
       )
     : availableDinners;
 
@@ -241,7 +241,7 @@ export function LogMealModal({
           <View className="flex-1 p-4">
             {/* Selected dinner info */}
             <View className="mb-6 p-4 border-2 border-black dark:border-white bg-gray-50 dark:bg-gray-900">
-              <Text className="text-sm text-[var(--color-gray)] uppercase tracking-wide mb-1">
+              <Text className="text-sm text-(--color-gray) uppercase tracking-wide mb-1">
                 Selected Dinner
               </Text>
               <Text className="text-xl uppercase tracking-wide font-bold">
@@ -251,7 +251,7 @@ export function LogMealModal({
 
             {/* Rating */}
             <View className="mb-6">
-              <Text className="text-sm text-[var(--color-gray)] uppercase tracking-wide mb-3">
+              <Text className="text-sm text-(--color-gray) uppercase tracking-wide mb-3">
                 Rating (optional)
               </Text>
               <RatingSelector value={rating} onChange={setRating} />
@@ -259,7 +259,7 @@ export function LogMealModal({
 
             {/* Notes */}
             <View className="flex-1">
-              <Text className="text-sm text-[var(--color-gray)] uppercase tracking-wide mb-3">
+              <Text className="text-sm text-(--color-gray) uppercase tracking-wide mb-3">
                 Notes (optional)
               </Text>
               <TextInput
