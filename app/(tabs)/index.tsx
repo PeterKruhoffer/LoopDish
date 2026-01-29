@@ -37,7 +37,7 @@ const RecentMealsSection = memo(function RecentMealsSection({
 }: RecentMealsSectionProps) {
   if (meals.length === 0) {
     return (
-      <View className="px-4">
+      <View className="py-2">
         <SectionHeader.Root>
           <SectionHeader.Title>Recent Meals</SectionHeader.Title>
           <SectionHeader.Action href="/(tabs)/progress" label="History →" />
@@ -52,7 +52,7 @@ const RecentMealsSection = memo(function RecentMealsSection({
   }
 
   return (
-    <View>
+    <View className="py-2">
       <SectionHeader.Root>
         <SectionHeader.Title>Recent Meals</SectionHeader.Title>
         <SectionHeader.Action href="/(tabs)/progress" label="History →" />
@@ -63,7 +63,6 @@ const RecentMealsSection = memo(function RecentMealsSection({
         keyExtractor={(item) => item._id}
         estimatedItemSize={140}
         horizontal
-        contentContainerStyle={{ paddingHorizontal: 16 }}
         showsHorizontalScrollIndicator={false}
         renderItem={({ item }) =>
           item.dinner ? (
@@ -104,11 +103,11 @@ const SuggestionsSection = memo(function SuggestionsSection({
 }: SuggestionsSectionProps) {
   if (suggestions.length === 0) {
     return (
-      <View className="px-4 mt-8">
+      <View className="py-2">
         <SectionHeader.Root>
           <SectionHeader.Title>Suggestions</SectionHeader.Title>
         </SectionHeader.Root>
-        <View className="p-4 border-2 border-black dark:border-white">
+        <View className="border-2 border-black dark:border-white">
           <Text className="text-center uppercase tracking-wide text-(--color-gray)">
             No suggestions available
           </Text>
@@ -118,7 +117,7 @@ const SuggestionsSection = memo(function SuggestionsSection({
   }
 
   return (
-    <View className="mt-8 px-4">
+    <View className="py-2">
       <SectionHeader.Root>
         <SectionHeader.Title>Suggestions</SectionHeader.Title>
       </SectionHeader.Root>
@@ -153,7 +152,7 @@ const QuickActionsSection = memo(function QuickActionsSection({
   onCreateDinner,
 }: QuickActionsSectionProps) {
   return (
-    <View className="mt-8 mb-24">
+    <View className="py-2">
       <SectionHeader.Root>
         <SectionHeader.Title>Quick Actions</SectionHeader.Title>
       </SectionHeader.Root>
@@ -186,7 +185,6 @@ export default function Index() {
     limit: 3,
   });
   const suggestions = useQuery(api.dinners.getSuggestions, { limit: 5 });
-  const dashboardStats = useQuery(api.dinners.getDashboardStats);
 
   // Get recently logged dinner IDs to filter from suggestions
   // Callbacks
@@ -199,58 +197,24 @@ export default function Index() {
   }, [router]);
 
   return (
-    <View className="flex-1">
-      <ScrollView
-        className="flex-1"
-        showsVerticalScrollIndicator={false}
-        contentInsetAdjustmentBehavior="automatic"
-      >
-        {/* Stats Overview */}
-        {dashboardStats && (
-          <View className="flex-row p-4 gap-3">
-            <View className="flex-1 p-3 border-2 border-black dark:border-white bg-black dark:bg-white">
-              <Text className="text-2xl font-bold text-white dark:text-black text-center">
-                {dashboardStats.totalDinners}
-              </Text>
-              <Text className="text-[10px] uppercase tracking-wider text-white dark:text-black text-center mt-1">
-                Total
-              </Text>
-            </View>
-            <View className="flex-1 p-3 border-2 border-black dark:border-white">
-              <Text className="text-2xl font-bold text-center">
-                {dashboardStats.mealsThisWeek}
-              </Text>
-              <Text className="text-[10px] uppercase tracking-wider text-(--color-gray) text-center mt-1">
-                This Week
-              </Text>
-            </View>
-            <View className="flex-1 p-3 border-2 border-black dark:border-white">
-              <Text className="text-2xl font-bold text-center">
-                {dashboardStats.averageRating?.toFixed(1) ?? "-"}
-              </Text>
-              <Text className="text-[10px] uppercase tracking-wider text-(--color-gray) text-center mt-1">
-                Avg Rating
-              </Text>
-            </View>
-          </View>
-        )}
+    <ScrollView
+      className="flex-1 px-4 bg-white dark:bg-black"
+      showsVerticalScrollIndicator={false}
+    >
+      {/* SECTION 1: Recent Meals */}
+      <RecentMealsSection meals={recentMeals ?? []} />
 
-        {/* SECTION 1: Recent Meals */}
-        <RecentMealsSection meals={recentMeals ?? []} />
+      {/* SECTION 2: Suggestions */}
+      <SuggestionsSection suggestions={suggestions ?? []} />
 
-        {/* SECTION 2: Suggestions */}
-        <SuggestionsSection suggestions={suggestions ?? []} />
+      {/* SECTION 3: Quick Actions */}
+      <QuickActionsSection
+        onLogMeal={handleLogMeal}
+        onCreateDinner={handleCreateDinner}
+      />
 
-        {/* SECTION 3: Quick Actions */}
-        <QuickActionsSection
-          onLogMeal={handleLogMeal}
-          onCreateDinner={handleCreateDinner}
-        />
-
-        {/* Bottom padding for tab bar */}
-        <View className="h-24" />
-      </ScrollView>
-
-    </View>
+      {/* Bottom padding for tab bar */}
+      <View className="h-24" />
+    </ScrollView>
   );
 }

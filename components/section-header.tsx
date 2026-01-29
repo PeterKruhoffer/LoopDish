@@ -13,7 +13,7 @@ interface SectionHeaderRootProps {
 
 function SectionHeaderRoot({ children }: SectionHeaderRootProps) {
   return (
-    <View className="flex-row items-center justify-between mb-3 px-4">
+    <View className="flex-row items-center justify-between mb-3">
       {children}
     </View>
   );
