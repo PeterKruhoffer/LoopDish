@@ -74,19 +74,51 @@ export const getStats = query({
   },
 });
 
+export const getDashboardStats = query({
+  args: {},
+  handler: async (ctx) => {
+    const dinners = await ctx.db.query("dinners").collect();
+    const logs = await ctx.db.query("dinnerLogs").collect();
+
+    const now = Date.now();
+    const oneWeekAgo = now - 7 * 24 * 60 * 60 * 1000;
+    const oneMonthAgo = now - 30 * 24 * 60 * 60 * 1000;
+
+    const thisWeekLogs = logs.filter((log) => log.madeAt >= oneWeekAgo);
+    const thisMonthLogs = logs.filter((log) => log.madeAt >= oneMonthAgo);
+
+    const ratedLogs = logs.filter((log) => log.rating !== undefined);
+    const avgRating =
+      ratedLogs.length > 0
+        ? ratedLogs.reduce((sum, log) => sum + (log.rating || 0), 0) /
+          ratedLogs.length
+        : null;
+
+    return {
+      totalDinners: dinners.length,
+      mealsThisWeek: thisWeekLogs.length,
+      mealsThisMonth: thisMonthLogs.length,
+      totalMealsCooked: logs.length,
+      averageRating: avgRating ? Math.round(avgRating * 10) / 10 : null,
+    };
+  },
+});
+
 export const getSuggestions = query({
-  args: { daysSinceLastMade: v.optional(v.number()) },
-  handler: async (ctx, { daysSinceLastMade = 14 }) => {
+  args: { daysSinceLastMade: v.optional(v.number()), limit: v.optional(v.number()) },
+  handler: async (ctx, { daysSinceLastMade = 14, limit = 3 }) => {
     const now = Date.now();
     const cutoff = now - daysSinceLastMade * 24 * 60 * 60 * 1000;
 
     const stats = await getDinnerStats(ctx);
 
-    return stats.filter((stat: any) => {
+    const suggestions = stats.filter((stat: any) => {
       const notMadeRecently = stat.lastMade === null || stat.lastMade < cutoff;
       const isGoodRating = stat.avgRating === null || stat.avgRating >= 3;
       return notMadeRecently && isGoodRating;
     });
+
+    return suggestions.slice(0, limit);
   },
 });
 

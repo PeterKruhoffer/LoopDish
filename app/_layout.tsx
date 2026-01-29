@@ -24,6 +24,27 @@ export default function RootLayout() {
       >
         <StatusBar style="auto" />
         <Stack.Screen name="(tabs)" />
+        <Stack.Screen
+          name="create-dinner"
+          options={{
+            presentation: "modal",
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="log-meal"
+          options={{
+            presentation: "modal",
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="plan-dinner"
+          options={{
+            presentation: "modal",
+            headerShown: false,
+          }}
+        />
       </Stack>
     </ConvexProvider>
   );

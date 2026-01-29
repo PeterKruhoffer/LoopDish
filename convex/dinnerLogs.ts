@@ -39,6 +39,28 @@ export const getRecent = query({
   },
 });
 
+export const getRecentWithDetails = query({
+  args: { limit: v.optional(v.number()) },
+  handler: async (ctx, { limit = 5 }) => {
+    const logs = await ctx.db
+      .query("dinnerLogs")
+      .order("desc")
+      .take(limit);
+
+    const logsWithDetails = await Promise.all(
+      logs.map(async (log) => {
+        const dinner = await ctx.db.get(log.dinnerId);
+        return {
+          ...log,
+          dinner,
+        };
+      })
+    );
+
+    return logsWithDetails;
+  },
+});
+
 export const getByDateRange = query({
   args: {
     startDate: v.number(),
