@@ -2,7 +2,7 @@ import { Text } from "@/components/themed-text";
 import { View } from "@/components/themed-view";
 import { Modal, Pressable, TextInput, ScrollView } from "react-native";
 import { useState, useCallback } from "react";
-import { useMutation } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 
 // Create Dinner form sheet modal
@@ -23,6 +23,7 @@ export function CreateDinnerModal({
   const [cookingTimeMinutes, setCookingTimeMinutes] = useState<string>("");
 
   const createDinner = useMutation(api.dinners.create);
+  const categorySuggestions = useQuery(api.dinners.getCategories) ?? [];
 
   const resetForm = useCallback(() => {
     setName("");
@@ -62,6 +63,13 @@ export function CreateDinnerModal({
   }, [name, category, estimatedCost, cookingTimeMinutes, createDinner, handleClose]);
 
   const canSave = name.trim().length > 0;
+  const normalizedCategory = category.trim().toLowerCase();
+  const filteredSuggestions = normalizedCategory
+    ? categorySuggestions.filter((item) =>
+        item.toLowerCase().includes(normalizedCategory),
+      )
+    : categorySuggestions;
+  const limitedSuggestions = filteredSuggestions.slice(0, 7);
 
   return (
     <Modal
@@ -128,6 +136,41 @@ export function CreateDinnerModal({
               placeholderTextColor="#666"
               className="border-2 border-black dark:border-white p-3 text-base"
             />
+            {limitedSuggestions.length > 0 ? (
+              <View className="gap-2">
+                <Text className="text-[10px] uppercase tracking-wider text-(--color-gray)">
+                  Suggestions
+                </Text>
+                <View className="flex-row flex-wrap gap-2">
+                  {limitedSuggestions.map((item) => {
+                    const isSelected =
+                      item.toLowerCase() === normalizedCategory &&
+                      normalizedCategory.length > 0;
+                    return (
+                      <Pressable
+                        key={item}
+                        onPress={() => setCategory(item)}
+                        className={`border-2 border-black dark:border-white px-3 py-2 ${
+                          isSelected
+                            ? "bg-black dark:bg-white"
+                            : "bg-white dark:bg-[#151718]"
+                        }`}
+                      >
+                        <Text
+                          className={`text-xs uppercase tracking-wider font-bold ${
+                            isSelected
+                              ? "text-white dark:text-black"
+                              : "text-black dark:text-white"
+                          }`}
+                        >
+                          {item}
+                        </Text>
+                      </Pressable>
+                    );
+                  })}
+                </View>
+              </View>
+            ) : null}
           </View>
 
           <View className="gap-2">
