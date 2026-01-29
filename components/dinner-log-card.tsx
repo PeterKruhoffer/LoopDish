@@ -19,6 +19,7 @@ interface DinnerLogCardProps {
   madeAt: number;
   rating?: number;
   notes?: string;
+  variant?: "compact" | "full";
 }
 
 // Format relative date using luxon
@@ -35,13 +36,20 @@ export const DinnerLogCard = memo(function DinnerLogCard({
   category,
   madeAt,
   rating,
+  notes,
+  variant = "compact",
 }: DinnerLogCardProps) {
   const tabActiveColor = useCSSVariable("--color-tab-active");
   const relativeDate = formatRelativeDate(madeAt);
+  const isCompact = variant === "compact";
+  const showNotes = variant === "full" && Boolean(notes);
 
   return (
-    <Link href={`/(tabs)/progress?dinnerId=${dinnerId}`} asChild>
-      <Pressable className="w-[260px] mr-3">
+    <Link
+      href={{ pathname: "/(tabs)/history", params: { dinnerId } }}
+      asChild
+    >
+      <Pressable className={isCompact ? "w-[260px] mr-3" : "w-full"}>
         <View
           className="bg-white dark:bg-[#151718] p-3 border-2 border-black dark:border-white"
           style={{
@@ -86,6 +94,12 @@ export const DinnerLogCard = memo(function DinnerLogCard({
               Not rated
             </Text>
           )}
+
+          {showNotes ? (
+            <Text className="text-xs text-(--color-gray) mt-3" numberOfLines={2}>
+              {notes}
+            </Text>
+          ) : null}
         </View>
       </Pressable>
     </Link>

@@ -37,7 +37,7 @@ export const SuggestionCard = memo(function SuggestionCard({
     : "Never made";
 
   return (
-    <Link href={`/(tabs)/progress?dinnerId=${id}`} asChild>
+    <Link href={{ pathname: "/(tabs)/history", params: { dinnerId: id } }} asChild>
       <Pressable className="w-full">
         <View
           className="flex-row items-center p-4 bg-white dark:bg-[#151718] border-l-4 border-black dark:border-white"

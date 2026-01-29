@@ -26,11 +26,11 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="progress"
+        name="history"
         options={{
-          title: "Progress",
+          title: "History",
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="chart.bar.fill" color={color} />
+            <IconSymbol size={28} name="clock.fill" color={color} />
           ),
         }}
       />

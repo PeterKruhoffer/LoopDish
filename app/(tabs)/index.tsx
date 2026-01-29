@@ -40,7 +40,10 @@ const RecentMealsSection = memo(function RecentMealsSection({
       <View className="py-2">
         <SectionHeader.Root>
           <SectionHeader.Title>Recent Meals</SectionHeader.Title>
-          <SectionHeader.Action href="/(tabs)/progress" label="History →" />
+          <SectionHeader.Action
+            href={{ pathname: "/(tabs)/history" }}
+            label="History →"
+          />
         </SectionHeader.Root>
         <View className="p-4 border-2 border-black dark:border-white">
           <Text className="text-center uppercase tracking-wide text-(--color-gray)">
@@ -55,7 +58,10 @@ const RecentMealsSection = memo(function RecentMealsSection({
     <View className="py-2">
       <SectionHeader.Root>
         <SectionHeader.Title>Recent Meals</SectionHeader.Title>
-        <SectionHeader.Action href="/(tabs)/progress" label="History →" />
+        <SectionHeader.Action
+          href={{ pathname: "/(tabs)/history" }}
+          label="History →"
+        />
       </SectionHeader.Root>
 
       <LegendList

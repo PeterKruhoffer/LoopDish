@@ -61,6 +61,34 @@ export const getRecentWithDetails = query({
   },
 });
 
+export const getHistoryWithDetails = query({
+  args: {
+    dinnerId: v.optional(v.id("dinners")),
+  },
+  handler: async (ctx, { dinnerId }) => {
+    const logs = dinnerId
+      ? await ctx.db
+          .query("dinnerLogs")
+          .withIndex("by_dinner_id", (q) => q.eq("dinnerId", dinnerId))
+          .collect()
+      : await ctx.db.query("dinnerLogs").collect();
+
+    const sortedLogs = [...logs].sort((a, b) => b.madeAt - a.madeAt);
+
+    const logsWithDetails = await Promise.all(
+      sortedLogs.map(async (log) => {
+        const dinner = await ctx.db.get(log.dinnerId);
+        return {
+          ...log,
+          dinner,
+        };
+      })
+    );
+
+    return logsWithDetails;
+  },
+});
+
 export const getByDateRange = query({
   args: {
     startDate: v.number(),
