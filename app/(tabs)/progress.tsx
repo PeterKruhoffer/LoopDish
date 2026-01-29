@@ -1,16 +1,16 @@
-import { ThemedView } from "@/components/themed-view";
-import { ThemedText } from "@/components/themed-text";
+import { View } from "@/components/themed-view";
+import { Text } from "@/components/themed-text";
 
 export default function Progress() {
   return (
-    <ThemedView
+    <View
       style={{
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
       }}
     >
-      <ThemedText>Find something to put here</ThemedText>
-    </ThemedView>
+      <Text>Find something to put here</Text>
+    </View>
   );
 }

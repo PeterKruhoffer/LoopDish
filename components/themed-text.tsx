@@ -1,10 +1,10 @@
-import { Text, type TextProps } from "react-native";
+import { Text as RNText, type TextProps } from "react-native";
 
 export type ThemedTextProps = TextProps & {
   type?: "default" | "title" | "defaultSemiBold" | "subtitle" | "link";
 };
 
-export function ThemedText({
+export function Text({
   style,
   type = "default",
   className,
@@ -21,7 +21,7 @@ export function ThemedText({
   };
 
   return (
-    <Text
+    <RNText
       className={`${baseClasses} ${typeClasses[type]} ${className || ""}`}
       style={style}
       {...rest}

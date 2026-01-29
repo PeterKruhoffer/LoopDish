@@ -1,14 +1,10 @@
-import { View, type ViewProps } from "react-native";
+import { View as RNView, type ViewProps } from "react-native";
 
 export type ThemedViewProps = ViewProps;
 
-export function ThemedView({
-  style,
-  className,
-  ...otherProps
-}: ThemedViewProps) {
+export function View({ style, className, ...otherProps }: ThemedViewProps) {
   return (
-    <View
+    <RNView
       className={`bg-white dark:bg-black ${className || ""}`}
       style={style}
       {...otherProps}
