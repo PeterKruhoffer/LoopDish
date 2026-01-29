@@ -1,7 +1,7 @@
 import { Text } from "@/components/themed-text";
 import { View } from "@/components/themed-view";
 import { Pressable } from "react-native";
-import { Link } from "expo-router";
+import { Link, type Href } from "expo-router";
 import { memo } from "react";
 
 // Compound component pattern for section headers
@@ -35,7 +35,7 @@ function SectionHeaderTitle({ children }: SectionHeaderTitleProps) {
 }
 
 interface SectionHeaderActionProps {
-  href: string;
+  href: Href;
   label: string;
 }
 
