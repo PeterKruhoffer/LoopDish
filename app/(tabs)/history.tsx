@@ -75,6 +75,7 @@ export default function History() {
             rating={item.rating}
             notes={item.notes}
             variant="full"
+            href={{ pathname: "/history/[id]", params: { id: item._id } }}
           />
         </View>
       );

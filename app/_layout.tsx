@@ -23,7 +23,14 @@ export default function RootLayout() {
         }}
       >
         <StatusBar style="auto" />
-        <Stack.Screen name="(tabs)" options={{ title: "LoopDish" }} />
+        <Stack.Screen
+          name="(tabs)"
+          options={{ title: "LoopDish", headerShown: false }}
+        />
+        <Stack.Screen
+          name="history/[id]"
+          options={{ title: "History Details", headerBackTitle: "Home" }}
+        />
         <Stack.Screen
           name="create-dinner-modal"
           options={{ presentation: "formSheet", title: "Create" }}
