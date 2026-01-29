@@ -1,7 +1,7 @@
 import { Text } from "@/components/themed-text";
 import { View } from "@/components/themed-view";
 import { Pressable } from "react-native";
-import { Link, type LinkProps } from "expo-router";
+import { Link } from "expo-router";
 import { memo } from "react";
 import { IconSymbol } from "@/components/ui/icon-symbol.ios";
 import { useCSSVariable } from "uniwind";
@@ -20,7 +20,6 @@ interface DinnerLogCardProps {
   rating?: number;
   notes?: string;
   variant?: "compact" | "full";
-  href?: LinkProps["href"];
 }
 
 // Format relative date using luxon
@@ -31,26 +30,27 @@ function formatRelativeDate(timestamp: number): string {
 }
 
 export const DinnerLogCard = memo(function DinnerLogCard({
-  dinnerId,
+  id,
   dinnerName,
   category,
   madeAt,
   rating,
   notes,
   variant = "compact",
-  href,
 }: DinnerLogCardProps) {
   const tabActiveColor = useCSSVariable("--color-tab-active");
   const relativeDate = formatRelativeDate(madeAt);
   const isCompact = variant === "compact";
   const showNotes = variant === "full" && Boolean(notes);
-  const destination: LinkProps["href"] = href ?? {
-    pathname: "/(tabs)/history",
-    params: { dinnerId },
-  };
 
   return (
-    <Link href={destination} asChild>
+    <Link
+      href={{
+        pathname: "/history/[id]",
+        params: { id },
+      }}
+      asChild
+    >
       <Pressable className={isCompact ? "w-65 mr-3" : "w-full"}>
         <View
           className="bg-white dark:bg-black p-3 border-2 border-black dark:border-white"
