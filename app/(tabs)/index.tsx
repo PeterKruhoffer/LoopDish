@@ -12,6 +12,7 @@ import { DinnerLogCard } from "@/components/dinner-log-card";
 import { SuggestionCard } from "@/components/suggestion-card";
 import { QuickAction } from "@/components/quick-action";
 import { LogMealModal } from "@/components/log-meal-modal";
+import { CreateDinnerModal } from "@/components/create-dinner-modal";
 
 // SECTION 1: Recent Meals Component
 // Using LegendList with horizontal layout for recent meals
@@ -145,10 +146,12 @@ const SuggestionsSection = memo(function SuggestionsSection({
 
 interface QuickActionsSectionProps {
   onLogMeal: () => void;
+  onCreateDinner: () => void;
 }
 
 const QuickActionsSection = memo(function QuickActionsSection({
   onLogMeal,
+  onCreateDinner,
 }: QuickActionsSectionProps) {
   return (
     <View className="mt-8 mb-24">
@@ -163,11 +166,11 @@ const QuickActionsSection = memo(function QuickActionsSection({
           variant="primary"
           onPress={onLogMeal}
         />
-        <QuickAction.Link
+        <QuickAction.Button
           icon="square.and.pencil"
           label="Create"
-          href="/(tabs)/progress"
           variant="secondary"
+          onPress={onCreateDinner}
         />
       </QuickAction.Grid>
     </View>
@@ -178,6 +181,7 @@ const QuickActionsSection = memo(function QuickActionsSection({
 
 export default function Index() {
   const [isLogModalVisible, setIsLogModalVisible] = useState(false);
+  const [isCreateModalVisible, setIsCreateModalVisible] = useState(false);
 
   // Data queries
   const recentMeals = useQuery(api.dinnerLogs.getRecentWithDetails, {
@@ -196,6 +200,14 @@ export default function Index() {
 
   const handleCloseModal = useCallback(() => {
     setIsLogModalVisible(false);
+  }, []);
+
+  const handleCreateDinner = useCallback(() => {
+    setIsCreateModalVisible(true);
+  }, []);
+
+  const handleCloseCreateModal = useCallback(() => {
+    setIsCreateModalVisible(false);
   }, []);
 
   return (
@@ -242,7 +254,10 @@ export default function Index() {
         <SuggestionsSection suggestions={suggestions ?? []} />
 
         {/* SECTION 3: Quick Actions */}
-        <QuickActionsSection onLogMeal={handleLogMeal} />
+        <QuickActionsSection
+          onLogMeal={handleLogMeal}
+          onCreateDinner={handleCreateDinner}
+        />
 
         {/* Bottom padding for tab bar */}
         <View className="h-24" />
@@ -253,6 +268,12 @@ export default function Index() {
         visible={isLogModalVisible}
         onClose={handleCloseModal}
         recentlyLoggedIds={recentDinnerIds}
+      />
+
+      {/* Create Dinner Modal */}
+      <CreateDinnerModal
+        visible={isCreateModalVisible}
+        onClose={handleCloseCreateModal}
       />
     </View>
   );
