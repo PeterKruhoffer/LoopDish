@@ -5,6 +5,7 @@ import { api } from "@/convex/_generated/api";
 import { ScrollView } from "react-native";
 import { LegendList } from "@legendapp/list";
 import { useState, useCallback, memo } from "react";
+import { useRouter } from "expo-router";
 
 // Components
 import { SectionHeader } from "@/components/section-header";
@@ -12,7 +13,6 @@ import { DinnerLogCard } from "@/components/dinner-log-card";
 import { SuggestionCard } from "@/components/suggestion-card";
 import { QuickAction } from "@/components/quick-action";
 import { LogMealModal } from "@/components/log-meal-modal";
-import { CreateDinnerModal } from "@/components/create-dinner-modal";
 
 // SECTION 1: Recent Meals Component
 // Using LegendList with horizontal layout for recent meals
@@ -180,8 +180,8 @@ const QuickActionsSection = memo(function QuickActionsSection({
 // MAIN DASHBOARD COMPONENT
 
 export default function Index() {
+  const router = useRouter();
   const [isLogModalVisible, setIsLogModalVisible] = useState(false);
-  const [isCreateModalVisible, setIsCreateModalVisible] = useState(false);
 
   // Data queries
   const recentMeals = useQuery(api.dinnerLogs.getRecentWithDetails, {
@@ -203,12 +203,8 @@ export default function Index() {
   }, []);
 
   const handleCreateDinner = useCallback(() => {
-    setIsCreateModalVisible(true);
-  }, []);
-
-  const handleCloseCreateModal = useCallback(() => {
-    setIsCreateModalVisible(false);
-  }, []);
+    router.push("/create-dinner-modal");
+  }, [router]);
 
   return (
     <View className="flex-1">
@@ -270,11 +266,6 @@ export default function Index() {
         recentlyLoggedIds={recentDinnerIds}
       />
 
-      {/* Create Dinner Modal */}
-      <CreateDinnerModal
-        visible={isCreateModalVisible}
-        onClose={handleCloseCreateModal}
-      />
     </View>
   );
 }

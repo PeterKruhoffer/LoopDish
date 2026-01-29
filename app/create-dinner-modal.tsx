@@ -1,17 +1,15 @@
 import { Text } from "@/components/themed-text";
 import { View } from "@/components/themed-view";
-import { Modal, Pressable, TextInput, ScrollView, type TextInputProps } from "react-native";
+import {
+  Pressable,
+  TextInput,
+  ScrollView,
+  type TextInputProps,
+} from "react-native";
 import { useState, useCallback, useMemo, type ReactNode } from "react";
+import { useRouter } from "expo-router";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
-
-// Create Dinner form sheet modal
-// Following vercel-react-native-skills: ui-native-modals
-
-interface CreateDinnerModalProps {
-  visible: boolean;
-  onClose: () => void;
-}
 
 const placeholderTextColor = "#666";
 const fieldLabelClassName =
@@ -100,10 +98,8 @@ function CategorySuggestions({
   );
 }
 
-export function CreateDinnerModal({
-  visible,
-  onClose,
-}: CreateDinnerModalProps) {
+export default function CreateDinnerModal() {
+  const router = useRouter();
   const [name, setName] = useState<string>("");
   const [category, setCategory] = useState<string>("");
   const [estimatedCost, setEstimatedCost] = useState<string>("");
@@ -121,8 +117,8 @@ export function CreateDinnerModal({
 
   const handleClose = useCallback(() => {
     resetForm();
-    onClose();
-  }, [onClose, resetForm]);
+    router.back();
+  }, [resetForm, router]);
 
   const handleSubmit = useCallback(async () => {
     const trimmedName = name.trim();
@@ -147,7 +143,14 @@ export function CreateDinnerModal({
     });
 
     handleClose();
-  }, [name, category, estimatedCost, cookingTimeMinutes, createDinner, handleClose]);
+  }, [
+    name,
+    category,
+    estimatedCost,
+    cookingTimeMinutes,
+    createDinner,
+    handleClose,
+  ]);
 
   const canSave = name.trim().length > 0;
   const normalizedCategory = category.trim().toLowerCase();
@@ -165,84 +168,64 @@ export function CreateDinnerModal({
   }, []);
 
   return (
-    <Modal
-      visible={visible}
-      presentationStyle="formSheet"
-      animationType="slide"
-      onRequestClose={handleClose}
+    <ScrollView
+      className="flex-1 bg-white dark:bg-black"
+      contentContainerClassName="p-4 gap-4 pb-8"
+      keyboardShouldPersistTaps="handled"
     >
-      <View className="flex-1 bg-white dark:bg-[#151718]">
-        <View className="flex-row items-center justify-between p-4 border-b-2 border-black dark:border-white">
-          <Pressable onPress={handleClose} className="p-2">
-            <Text className="text-base uppercase tracking-wide font-bold text-(--color-gray) dark:text-white">
-              Cancel
-            </Text>
-          </Pressable>
+      <Field
+        label="Dinner Name"
+        placeholder="e.g. Lemon Chicken"
+        value={name}
+        onChangeText={setName}
+      />
 
-          <Text className="text-lg uppercase tracking-wider font-bold">
-            Create Dinner
-          </Text>
+      <Field
+        label="Category (optional)"
+        placeholder="e.g. Pasta, Vegetarian"
+        value={category}
+        onChangeText={setCategory}
+      >
+        <CategorySuggestions
+          suggestions={limitedSuggestions}
+          normalizedCategory={normalizedCategory}
+          onSelect={handleSelectCategory}
+        />
+      </Field>
 
-          <Pressable
-            onPress={handleSubmit}
-            disabled={!canSave}
-            className="p-2"
-          >
-            <Text
-              className={`text-base uppercase tracking-wide font-bold ${
-                canSave
-                  ? "text-(--color-gray) dark:text-white"
-                  : "text-(--color-gray)/50 dark:text-white/50"
-              }`}
-            >
-              Save
-            </Text>
-          </Pressable>
-        </View>
+      <Field
+        label="Estimated Cost (optional)"
+        placeholder="e.g. 12.50"
+        value={estimatedCost}
+        onChangeText={setEstimatedCost}
+        keyboardType="decimal-pad"
+      />
 
-        <ScrollView
-          className="flex-1"
-          contentContainerClassName="p-4 gap-4"
-          keyboardShouldPersistTaps="handled"
-          contentInsetAdjustmentBehavior="automatic"
+      <Field
+        label="Cooking Time (minutes, optional)"
+        placeholder="e.g. 45"
+        value={cookingTimeMinutes}
+        onChangeText={setCookingTimeMinutes}
+        keyboardType="number-pad"
+      />
+
+      <Pressable
+        onPress={handleSubmit}
+        disabled={!canSave}
+        className={`mt-2 border-2 border-black dark:border-white p-4 ${
+          canSave ? "bg-black dark:bg-white" : "bg-white dark:bg-[#151718]"
+        }`}
+      >
+        <Text
+          className={`text-base uppercase tracking-wider font-bold text-center ${
+            canSave
+              ? "text-white dark:text-black"
+              : "text-(--color-gray)/60 dark:text-white/60"
+          }`}
         >
-          <Field
-            label="Dinner Name"
-            placeholder="e.g. Lemon Chicken"
-            value={name}
-            onChangeText={setName}
-          />
-
-          <Field
-            label="Category (optional)"
-            placeholder="e.g. Pasta, Vegetarian"
-            value={category}
-            onChangeText={setCategory}
-          >
-            <CategorySuggestions
-              suggestions={limitedSuggestions}
-              normalizedCategory={normalizedCategory}
-              onSelect={handleSelectCategory}
-            />
-          </Field>
-
-          <Field
-            label="Estimated Cost (optional)"
-            placeholder="e.g. 12.50"
-            value={estimatedCost}
-            onChangeText={setEstimatedCost}
-            keyboardType="decimal-pad"
-          />
-
-          <Field
-            label="Cooking Time (minutes, optional)"
-            placeholder="e.g. 45"
-            value={cookingTimeMinutes}
-            onChangeText={setCookingTimeMinutes}
-            keyboardType="number-pad"
-          />
-        </ScrollView>
-      </View>
-    </Modal>
+          Save
+        </Text>
+      </Pressable>
+    </ScrollView>
   );
 }
