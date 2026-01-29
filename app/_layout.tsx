@@ -23,7 +23,7 @@ export default function RootLayout() {
         }}
       >
         <StatusBar style="auto" />
-        <Stack.Screen name="(tabs)" />
+        <Stack.Screen name="(tabs)" options={{ title: "LoopDish" }} />
         <Stack.Screen
           name="create-dinner"
           options={{

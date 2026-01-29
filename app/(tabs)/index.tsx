@@ -3,7 +3,7 @@ import { ThemedText } from "@/components/themed-text";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Link } from "expo-router";
-import { Pressable, ScrollView, View } from "react-native";
+import { Pressable, ScrollView } from "react-native";
 import { IconSymbol } from "@/components/ui/icon-symbol.ios";
 import { useCSSVariable } from "uniwind";
 
@@ -18,7 +18,9 @@ function StatCard({
 }) {
   return (
     <ThemedView className="bg-gray-50 dark:bg-gray-900 rounded-2xl p-4 flex-1 min-w-[100px]">
-      <ThemedText className="text-2xl font-bold text-center">{value}</ThemedText>
+      <ThemedText className="text-2xl font-bold text-center">
+        {value}
+      </ThemedText>
       <ThemedText className="text-xs text-gray-500 dark:text-gray-400 text-center mt-1">
         {label}
       </ThemedText>
@@ -117,7 +119,7 @@ function formatDate(timestamp: number): string {
   const date = new Date(timestamp);
   const now = new Date();
   const diffDays = Math.floor(
-    (now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24)
+    (now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24),
   );
 
   if (diffDays === 0) return "Today";
@@ -129,7 +131,9 @@ function formatDate(timestamp: number): string {
 
 export default function Index() {
   const dashboardStats = useQuery(api.dinners.getDashboardStats);
-  const recentMeals = useQuery(api.dinnerLogs.getRecentWithDetails, { limit: 5 });
+  const recentMeals = useQuery(api.dinnerLogs.getRecentWithDetails, {
+    limit: 5,
+  });
   const suggestions = useQuery(api.dinners.getSuggestions, { limit: 3 });
   const tabActiveColor = useCSSVariable("--color-tab-active");
 
