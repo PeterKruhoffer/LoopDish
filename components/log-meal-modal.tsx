@@ -175,7 +175,7 @@ export function LogMealModal({
         {/* Header */}
         <View className="flex-row items-center justify-between p-4 border-b-2 border-black dark:border-white">
           <Pressable onPress={handleBack} className="p-2">
-            <Text className="text-base uppercase tracking-wide font-bold text-[#0a7ea4] dark:text-white">
+            <Text className="text-base uppercase tracking-wide font-bold text-(--color-gray) dark:text-white">
               {step === "details" ? "← Back" : "Cancel"}
             </Text>
           </Pressable>
@@ -186,7 +186,7 @@ export function LogMealModal({
 
           {step === "details" ? (
             <Pressable onPress={handleSubmit} className="p-2">
-              <Text className="text-base uppercase tracking-wide font-bold text-[#0a7ea4] dark:text-white">
+              <Text className="text-base uppercase tracking-wide font-bold text-(--color-gray) dark:text-white">
                 Save
               </Text>
             </Pressable>
