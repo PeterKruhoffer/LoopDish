@@ -4,7 +4,7 @@ import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { ScrollView } from "react-native";
 import { LegendList } from "@legendapp/list";
-import { useState, useCallback, memo } from "react";
+import { useCallback, memo } from "react";
 import { useRouter } from "expo-router";
 
 // Components
@@ -12,7 +12,6 @@ import { SectionHeader } from "@/components/section-header";
 import { DinnerLogCard } from "@/components/dinner-log-card";
 import { SuggestionCard } from "@/components/suggestion-card";
 import { QuickAction } from "@/components/quick-action";
-import { LogMealModal } from "@/components/log-meal-modal";
 
 // SECTION 1: Recent Meals Component
 // Using LegendList with horizontal layout for recent meals
@@ -181,7 +180,6 @@ const QuickActionsSection = memo(function QuickActionsSection({
 
 export default function Index() {
   const router = useRouter();
-  const [isLogModalVisible, setIsLogModalVisible] = useState(false);
 
   // Data queries
   const recentMeals = useQuery(api.dinnerLogs.getRecentWithDetails, {
@@ -191,16 +189,10 @@ export default function Index() {
   const dashboardStats = useQuery(api.dinners.getDashboardStats);
 
   // Get recently logged dinner IDs to filter from suggestions
-  const recentDinnerIds = recentMeals?.map((m) => m.dinnerId) ?? [];
-
   // Callbacks
   const handleLogMeal = useCallback(() => {
-    setIsLogModalVisible(true);
-  }, []);
-
-  const handleCloseModal = useCallback(() => {
-    setIsLogModalVisible(false);
-  }, []);
+    router.push("/log-meal-modal");
+  }, [router]);
 
   const handleCreateDinner = useCallback(() => {
     router.push("/create-dinner-modal");
@@ -258,13 +250,6 @@ export default function Index() {
         {/* Bottom padding for tab bar */}
         <View className="h-24" />
       </ScrollView>
-
-      {/* Log Meal Modal */}
-      <LogMealModal
-        visible={isLogModalVisible}
-        onClose={handleCloseModal}
-        recentlyLoggedIds={recentDinnerIds}
-      />
 
     </View>
   );

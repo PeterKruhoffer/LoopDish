@@ -28,6 +28,10 @@ export default function RootLayout() {
           name="create-dinner-modal"
           options={{ presentation: "formSheet", title: "Create" }}
         />
+        <Stack.Screen
+          name="log-meal-modal"
+          options={{ presentation: "formSheet", title: "Log Meal" }}
+        />
       </Stack>
     </ConvexProvider>
   );
