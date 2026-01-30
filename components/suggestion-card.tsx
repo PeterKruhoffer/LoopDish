@@ -38,7 +38,10 @@ export const SuggestionCard = memo(function SuggestionCard({
 
   return (
     <Link
-      href={{ pathname: "/log-meal-modal", params: { dinnerId: id, name } }}
+      href={{
+        pathname: "/log-meal-modal/[dinnerId]" as const,
+        params: { dinnerId: id },
+      }}
       asChild
     >
       <Pressable className="w-full">

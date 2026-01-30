@@ -4,14 +4,14 @@ import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { ScrollView } from "react-native";
 import { LegendList } from "@legendapp/list";
-import { useCallback, memo } from "react";
-import { useRouter } from "expo-router";
+import { memo } from "react";
 
 // Components
 import { SectionHeader } from "@/components/section-header";
 import { DinnerLogCard } from "@/components/dinner-log-card";
 import { SuggestionCard } from "@/components/suggestion-card";
 import { QuickAction } from "@/components/quick-action";
+import { Link } from "expo-router";
 
 // SECTION 1: Recent Meals Component
 // Using LegendList with horizontal layout for recent meals
@@ -149,13 +149,13 @@ const SuggestionsSection = memo(function SuggestionsSection({
 // CTA buttons for logging and creating
 
 interface QuickActionsSectionProps {
-  onLogMeal: () => void;
-  onCreateDinner: () => void;
+  logMealHref: string;
+  createDinnerHref: string;
 }
 
 const QuickActionsSection = memo(function QuickActionsSection({
-  onLogMeal,
-  onCreateDinner,
+  logMealHref,
+  createDinnerHref,
 }: QuickActionsSectionProps) {
   return (
     <View className="py-2">
@@ -164,17 +164,17 @@ const QuickActionsSection = memo(function QuickActionsSection({
       </SectionHeader.Root>
 
       <QuickAction.Grid>
-        <QuickAction.Button
+        <QuickAction.Link
           icon="plus.circle.fill"
           label="Log Meal"
           variant="primary"
-          onPress={onLogMeal}
+          href={logMealHref}
         />
-        <QuickAction.Button
+        <QuickAction.Link
           icon="square.and.pencil"
           label="Create"
           variant="secondary"
-          onPress={onCreateDinner}
+          href={createDinnerHref}
         />
       </QuickAction.Grid>
     </View>
@@ -184,23 +184,11 @@ const QuickActionsSection = memo(function QuickActionsSection({
 // MAIN DASHBOARD COMPONENT
 
 export default function Index() {
-  const router = useRouter();
-
   // Data queries
   const recentMeals = useQuery(api.dinnerLogs.getRecentWithDetails, {
     limit: 3,
   });
   const suggestions = useQuery(api.dinners.getSuggestions, { limit: 5 });
-
-  // Get recently logged dinner IDs to filter from suggestions
-  // Callbacks
-  const handleLogMeal = useCallback(() => {
-    router.push("/log-meal-modal");
-  }, [router]);
-
-  const handleCreateDinner = useCallback(() => {
-    router.push("/create-dinner-modal");
-  }, [router]);
 
   return (
     <ScrollView
@@ -212,11 +200,14 @@ export default function Index() {
 
       {/* SECTION 2: Suggestions */}
       <SuggestionsSection suggestions={suggestions ?? []} />
+      <Link href="/log-meal-modal/">
+        <Text>Test link</Text>
+      </Link>
 
       {/* SECTION 3: Quick Actions */}
       <QuickActionsSection
-        onLogMeal={handleLogMeal}
-        onCreateDinner={handleCreateDinner}
+        logMealHref="/log-meal-modal"
+        createDinnerHref="/create-dinner-modal"
       />
 
       {/* Bottom padding for tab bar */}
