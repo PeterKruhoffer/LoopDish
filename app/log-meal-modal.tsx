@@ -1,8 +1,8 @@
 import { Text } from "@/components/themed-text";
 import { View } from "@/components/themed-view";
-import { Pressable, TextInput } from "react-native";
-import { memo, useCallback, useMemo, useState } from "react";
-import { useRouter } from "expo-router";
+import { Alert, Pressable, TextInput } from "react-native";
+import { memo, useCallback, useEffect, useMemo, useState } from "react";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { LegendList } from "@legendapp/list";
@@ -80,6 +80,7 @@ function RatingSelector({ value, onChange }: RatingSelectorProps) {
 
 export default function LogMealModal() {
   const router = useRouter();
+  const params = useLocalSearchParams();
   const [step, setStep] = useState<"select" | "details">("select");
   const [selectedDinner, setSelectedDinner] = useState<{
     id: string;
@@ -94,6 +95,12 @@ export default function LogMealModal() {
     limit: 3,
   });
   const createLog = useMutation(api.dinnerLogs.create);
+  const removeDinner = useMutation(api.dinners.remove);
+
+  const paramDinnerId = Array.isArray(params.dinnerId)
+    ? params.dinnerId[0]
+    : params.dinnerId;
+  const paramName = Array.isArray(params.name) ? params.name[0] : params.name;
 
   const recentDinnerIds = recentMeals?.map((meal) => meal.dinnerId) ?? [];
   const recentDinnerIdSet = useMemo(
@@ -105,6 +112,18 @@ export default function LogMealModal() {
     () => allDinners.filter((dinner) => !recentDinnerIdSet.has(dinner._id)),
     [allDinners, recentDinnerIdSet],
   );
+
+  useEffect(() => {
+    if (!paramDinnerId) return;
+    const matchedName =
+      typeof paramName === "string"
+        ? paramName
+        : allDinners.find((dinner) => dinner._id === paramDinnerId)?.name;
+    if (!matchedName) return;
+
+    setSelectedDinner({ id: paramDinnerId, name: matchedName });
+    setStep("details");
+  }, [paramDinnerId, paramName, allDinners]);
 
   const filteredDinners = useMemo(() => {
     if (!searchQuery) return availableDinners;
@@ -149,6 +168,26 @@ export default function LogMealModal() {
     setSearchQuery("");
     handleClose();
   }, [selectedDinner, rating, notes, createLog, handleClose]);
+
+  const handleDeleteDinner = useCallback(() => {
+    if (!selectedDinner) return;
+    Alert.alert("Delete dinner?", "This removes the dinner and all its logs.", [
+      { text: "Cancel", style: "cancel" },
+      {
+        text: "Delete",
+        style: "destructive",
+        onPress: async () => {
+          await removeDinner({ id: selectedDinner.id as any });
+          setStep("select");
+          setSelectedDinner(null);
+          setRating(0);
+          setNotes("");
+          setSearchQuery("");
+          handleClose();
+        },
+      },
+    ]);
+  }, [selectedDinner, removeDinner, handleClose]);
 
   const canSave = Boolean(selectedDinner);
 
@@ -248,6 +287,15 @@ export default function LogMealModal() {
               }`}
             >
               Save
+            </Text>
+          </Pressable>
+
+          <Pressable
+            onPress={handleDeleteDinner}
+            className="border-2 border-red-600 p-4"
+          >
+            <Text className="text-base uppercase tracking-wider font-bold text-center text-red-600">
+              Delete Dinner
             </Text>
           </Pressable>
         </View>
