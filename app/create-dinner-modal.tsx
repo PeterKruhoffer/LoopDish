@@ -143,14 +143,7 @@ export default function CreateDinnerModal() {
     });
 
     handleClose();
-  }, [
-    name,
-    category,
-    tag,
-    cookingTimeMinutes,
-    createDinner,
-    handleClose,
-  ]);
+  }, [name, category, tag, cookingTimeMinutes, createDinner, handleClose]);
 
   const canSave = name.trim().length > 0;
   const normalizedCategory = category.trim().toLowerCase();
@@ -173,7 +166,7 @@ export default function CreateDinnerModal() {
 
   return (
     <ScrollView
-      className="flex-1 bg-white dark:bg-black"
+      className="flex-1 min-h-screen bg-white dark:bg-black"
       contentContainerClassName="p-4 gap-4 pb-8"
       keyboardShouldPersistTaps="handled"
     >
