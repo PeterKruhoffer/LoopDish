@@ -1,5 +1,6 @@
 import { View } from "@/components/themed-view";
 import { Text } from "@/components/themed-text";
+import { FullScreenLoading } from "@/components/full-screen-loading";
 import { DinnerLogCard } from "@/components/dinner-log-card";
 import { useLocalSearchParams } from "expo-router";
 import { useQuery } from "convex/react";
@@ -69,6 +70,10 @@ export default function History() {
     },
     [logsWithDinner.length],
   );
+
+  if (historyLogs === undefined) {
+    return <FullScreenLoading />;
+  }
 
   if (logsWithDinner.length === 0) {
     return <EmptyState emptyTitle={emptyTitle} emptyBody={emptyBody} />;

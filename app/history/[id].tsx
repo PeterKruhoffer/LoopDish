@@ -1,5 +1,6 @@
 import { Text } from "@/components/themed-text";
 import { View } from "@/components/themed-view";
+import { FullScreenLoading } from "@/components/full-screen-loading";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
@@ -53,7 +54,7 @@ export default function HistoryDetailScreen() {
   }
 
   if (log === undefined || dinner === undefined) {
-    return <EmptyState title="Loading" body="Pulling up your log details" />;
+    return <FullScreenLoading />;
   }
 
   if (!log || !dinner) {

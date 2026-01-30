@@ -1,5 +1,6 @@
 import { Text } from "@/components/themed-text";
 import { View } from "@/components/themed-view";
+import { FullScreenLoading } from "@/components/full-screen-loading";
 import { Pressable, TextInput } from "react-native";
 import { memo, useMemo, useState } from "react";
 import { Link } from "expo-router";
@@ -51,7 +52,7 @@ const DinnerSelectorItem = memo(function DinnerSelectorItem({
 export default function LogMealIndex() {
   const [searchQuery, setSearchQuery] = useState<string>("");
 
-  const allDinners = useQuery(api.dinners.getAll) ?? [];
+  const allDinners = useQuery(api.dinners.getAll);
   const recentMeals = useQuery(api.dinnerLogs.getRecentWithDetails, {
     limit: 4,
   });
@@ -59,7 +60,7 @@ export default function LogMealIndex() {
   const recentDinnerIds = recentMeals?.map((meal) => meal.dinnerId) ?? [];
   const recentDinnerIdSet = new Set(recentDinnerIds);
 
-  const availableDinners = allDinners.filter(
+  const availableDinners = (allDinners ?? []).filter(
     (dinner) => !recentDinnerIdSet.has(dinner._id),
   );
 
@@ -72,6 +73,10 @@ export default function LogMealIndex() {
         (dinner.category?.toLowerCase() || "").includes(normalizedQuery),
     );
   }, [availableDinners, searchQuery]);
+
+  if (allDinners === undefined || recentMeals === undefined) {
+    return <FullScreenLoading />;
+  }
 
   return (
     <View className="flex-1 bg-white dark:bg-black">

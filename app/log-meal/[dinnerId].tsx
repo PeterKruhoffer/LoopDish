@@ -1,6 +1,12 @@
 import { Text } from "@/components/themed-text";
 import { View } from "@/components/themed-view";
-import { Alert, Pressable, ScrollView, TextInput } from "react-native";
+import { FullScreenLoading } from "@/components/full-screen-loading";
+import {
+  Alert,
+  Pressable,
+  ScrollView,
+  TextInput,
+} from "react-native";
 import { useCallback, useMemo, useState } from "react";
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import { useMutation, useQuery } from "convex/react";
@@ -108,16 +114,7 @@ export default function LogMealDetailsScreen() {
   }
 
   if (dinner === undefined) {
-    return (
-      <View className="flex-1 items-center justify-center p-6 bg-white dark:bg-black">
-        <Text className="text-base uppercase tracking-wide text-center">
-          Loading dinner
-        </Text>
-        <Text className="text-xs uppercase tracking-wide text-(--color-gray) text-center mt-2">
-          Pulling up the details
-        </Text>
-      </View>
-    );
+    return <FullScreenLoading />;
   }
 
   if (!dinner) {

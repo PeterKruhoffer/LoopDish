@@ -1,5 +1,6 @@
 import { Text } from "@/components/themed-text";
 import { View } from "@/components/themed-view";
+import { FullScreenLoading } from "@/components/full-screen-loading";
 import {
   Pressable,
   TextInput,
@@ -106,7 +107,7 @@ export default function CreateDinnerModal() {
   const [cookingTimeMinutes, setCookingTimeMinutes] = useState<string>("");
 
   const createDinner = useMutation(api.dinners.create);
-  const categorySuggestions = useQuery(api.dinners.getCategories) ?? [];
+  const categorySuggestions = useQuery(api.dinners.getCategories);
 
   const resetForm = useCallback(() => {
     setName("");
@@ -155,7 +156,7 @@ export default function CreateDinnerModal() {
   const canSave = name.trim().length > 0;
   const normalizedCategory = category.trim().toLowerCase();
   const limitedSuggestions = useMemo(() => {
-    if (categorySuggestions.length === 0) return [];
+    if (!categorySuggestions || categorySuggestions.length === 0) return [];
     if (!normalizedCategory) return categorySuggestions.slice(0, 7);
 
     return categorySuggestions
@@ -166,6 +167,10 @@ export default function CreateDinnerModal() {
   const handleSelectCategory = useCallback((value: string) => {
     setCategory(value);
   }, []);
+
+  if (categorySuggestions === undefined) {
+    return <FullScreenLoading />;
+  }
 
   return (
     <ScrollView

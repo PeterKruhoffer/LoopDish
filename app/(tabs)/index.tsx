@@ -1,5 +1,6 @@
 import { View } from "@/components/themed-view";
 import { Text } from "@/components/themed-text";
+import { FullScreenLoading } from "@/components/full-screen-loading";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { ScrollView } from "react-native";
@@ -189,6 +190,10 @@ export default function Index() {
     limit: 3,
   });
   const suggestions = useQuery(api.dinners.getSuggestions, { limit: 5 });
+
+  if (recentMeals === undefined || suggestions === undefined) {
+    return <FullScreenLoading />;
+  }
 
   return (
     <ScrollView
