@@ -15,6 +15,7 @@ interface DinnerHistoryItem {
     _id: string;
     name: string;
     category?: string;
+    tag?: string;
   } | null;
   madeAt: number;
   rating?: number;
@@ -60,6 +61,7 @@ export default function History() {
             dinnerId={item.dinnerId}
             dinnerName={item.dinner.name}
             category={item.dinner.category}
+            tag={item.dinner.tag}
             madeAt={item.madeAt}
             rating={item.rating}
             notes={item.notes}

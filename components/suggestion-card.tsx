@@ -12,6 +12,7 @@ interface SuggestionCardProps {
   id: string;
   name: string;
   category?: string;
+  tag?: string;
   lastMadeAt?: number;
   timesMade?: number;
   averageRating?: number;
@@ -28,6 +29,7 @@ export const SuggestionCard = memo(function SuggestionCard({
   id,
   name,
   category,
+  tag,
   lastMadeAt,
   timesMade,
   averageRating,
@@ -35,6 +37,10 @@ export const SuggestionCard = memo(function SuggestionCard({
   const lastMadeText = lastMadeAt
     ? `Last made ${formatRelativeDate(lastMadeAt)}`
     : "Never made";
+  const badges = [
+    { value: category, type: "category" },
+    { value: tag, type: "tag" },
+  ].filter((badge) => Boolean(badge.value));
 
   return (
     <Link
@@ -56,14 +62,17 @@ export const SuggestionCard = memo(function SuggestionCard({
               {name}
             </Text>
 
-            <View className="flex-row items-center gap-2">
-              {category && (
-                <View className="bg-black dark:bg-white px-2 py-0.5">
+            <View className="flex-row flex-wrap items-center gap-2">
+              {badges.map((badge) => (
+                <View
+                  key={`${badge.type}-${badge.value}`}
+                  className="bg-black dark:bg-white px-2 py-0.5"
+                >
                   <Text className="text-white dark:text-black text-xs uppercase tracking-wider font-bold">
-                    {category}
+                    {badge.value}
                   </Text>
                 </View>
-              )}
+              ))}
               <Text className="text-sm text-gray-600 dark:text-gray-400">
                 {lastMadeText}
               </Text>

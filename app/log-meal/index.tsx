@@ -15,13 +15,16 @@ interface DinnerSelectorItemProps {
   id: string;
   name: string;
   category?: string;
+  tag?: string;
 }
 
 const DinnerSelectorItem = memo(function DinnerSelectorItem({
   id,
   name,
   category,
+  tag,
 }: DinnerSelectorItemProps) {
+  const metaLabel = [category, tag].filter(Boolean).join(" · ");
   return (
     <Link
       href={{
@@ -36,9 +39,9 @@ const DinnerSelectorItem = memo(function DinnerSelectorItem({
             <Text className="text-base uppercase tracking-wide font-semibold">
               {name}
             </Text>
-            {category ? (
+            {metaLabel ? (
               <Text className="text-sm text-(--color-gray) uppercase tracking-wide mt-1">
-                {category}
+                {metaLabel}
               </Text>
             ) : null}
           </View>
@@ -70,7 +73,8 @@ export default function LogMealIndex() {
     return availableDinners.filter(
       (dinner) =>
         dinner.name.toLowerCase().includes(normalizedQuery) ||
-        (dinner.category?.toLowerCase() || "").includes(normalizedQuery),
+        (dinner.category?.toLowerCase() || "").includes(normalizedQuery) ||
+        (dinner.tag?.toLowerCase() || "").includes(normalizedQuery),
     );
   }, [availableDinners, searchQuery]);
 
@@ -113,6 +117,7 @@ export default function LogMealIndex() {
               id={item._id}
               name={item.name}
               category={item.category}
+              tag={item.tag}
             />
           )}
         />

@@ -126,14 +126,14 @@ export const create = mutation({
   args: {
     name: v.string(),
     category: v.optional(v.string()),
-    estimatedCost: v.optional(v.number()),
+    tag: v.optional(v.string()),
     cookingTimeMinutes: v.optional(v.number()),
   },
-  handler: async (ctx, { name, category, estimatedCost, cookingTimeMinutes }) => {
+  handler: async (ctx, { name, category, tag, cookingTimeMinutes }) => {
     return await ctx.db.insert("dinners", {
       name,
       category,
-      estimatedCost,
+      tag,
       cookingTimeMinutes,
       createdAt: Date.now(),
     });
@@ -145,7 +145,7 @@ export const update = mutation({
     id: v.id("dinners"),
     name: v.optional(v.string()),
     category: v.optional(v.string()),
-    estimatedCost: v.optional(v.number()),
+    tag: v.optional(v.string()),
     cookingTimeMinutes: v.optional(v.number()),
   },
   handler: async (ctx, { id, ...updates }) => {

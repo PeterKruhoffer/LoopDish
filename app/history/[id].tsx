@@ -120,9 +120,9 @@ export default function HistoryDetailScreen() {
             {log.servings ? log.servings : "Not set"}
           </Text>
         </InfoRow>
-        <InfoRow label="Estimated cost">
+        <InfoRow label="Tag">
           <Text className="text-base uppercase tracking-wide">
-            {dinner.estimatedCost ? `$${dinner.estimatedCost}` : "Not set"}
+            {dinner.tag ? dinner.tag : "Not set"}
           </Text>
         </InfoRow>
         <InfoRow label="Cook time">

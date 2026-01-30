@@ -5,7 +5,7 @@ export default defineSchema({
   dinners: defineTable({
     name: v.string(),
     category: v.optional(v.string()),
-    estimatedCost: v.optional(v.number()),
+    tag: v.optional(v.string()),
     cookingTimeMinutes: v.optional(v.number()),
     createdAt: v.number(),
   })

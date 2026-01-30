@@ -16,6 +16,7 @@ interface DinnerLogCardProps {
   dinnerId: string;
   dinnerName: string;
   category?: string;
+  tag?: string;
   madeAt: number;
   rating?: number;
   notes?: string;
@@ -33,6 +34,7 @@ export const DinnerLogCard = memo(function DinnerLogCard({
   id,
   dinnerName,
   category,
+  tag,
   madeAt,
   rating,
   notes,
@@ -42,6 +44,10 @@ export const DinnerLogCard = memo(function DinnerLogCard({
   const relativeDate = formatRelativeDate(madeAt);
   const isCompact = variant === "compact";
   const showNotes = variant === "full" && Boolean(notes);
+  const badges = [
+    { value: category, type: "category" },
+    { value: tag, type: "tag" },
+  ].filter((badge) => Boolean(badge.value));
 
   return (
     <Link
@@ -62,14 +68,21 @@ export const DinnerLogCard = memo(function DinnerLogCard({
             {dinnerName}
           </Text>
 
-          {/* Category badge */}
-          {category && (
-            <View className="self-start bg-black dark:bg-white px-2 py-1 mb-3">
-              <Text className="text-white dark:text-black text-xs uppercase tracking-wider font-bold">
-                {category}
-              </Text>
+          {/* Category / tag badges */}
+          {badges.length > 0 ? (
+            <View className="flex-row flex-wrap gap-2 mb-3">
+              {badges.map((badge) => (
+                <View
+                  key={`${badge.type}-${badge.value}`}
+                  className="self-start bg-black dark:bg-white px-2 py-1"
+                >
+                  <Text className="text-white dark:text-black text-xs uppercase tracking-wider font-bold">
+                    {badge.value}
+                  </Text>
+                </View>
+              ))}
             </View>
-          )}
+          ) : null}
 
           {/* Date */}
           <Text className="text-sm text-gray-600 dark:text-gray-400 mb-2">

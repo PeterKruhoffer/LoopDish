@@ -26,6 +26,7 @@ interface RecentMealsSectionProps {
       _id: string;
       name: string;
       category?: string;
+      tag?: string;
     } | null;
     madeAt: number;
     rating?: number;
@@ -78,6 +79,7 @@ const RecentMealsSection = memo(function RecentMealsSection({
               dinnerId={item.dinnerId}
               dinnerName={item.dinner.name}
               category={item.dinner.category}
+              tag={item.dinner.tag}
               madeAt={item.madeAt}
               rating={item.rating}
               notes={item.notes}
@@ -98,6 +100,7 @@ interface SuggestionsSectionProps {
       _id: string;
       name: string;
       category?: string;
+      tag?: string;
     };
     count: number;
     lastMade: number | null;
@@ -136,6 +139,7 @@ const SuggestionsSection = memo(function SuggestionsSection({
             id={item.dinner._id}
             name={item.dinner.name}
             category={item.dinner.category}
+            tag={item.dinner.tag}
             lastMadeAt={item.lastMade ?? undefined}
             timesMade={item.count}
             averageRating={item.avgRating ?? undefined}

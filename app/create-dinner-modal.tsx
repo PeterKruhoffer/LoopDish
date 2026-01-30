@@ -103,7 +103,7 @@ export default function CreateDinnerModal() {
   const router = useRouter();
   const [name, setName] = useState<string>("");
   const [category, setCategory] = useState<string>("");
-  const [estimatedCost, setEstimatedCost] = useState<string>("");
+  const [tag, setTag] = useState<string>("");
   const [cookingTimeMinutes, setCookingTimeMinutes] = useState<string>("");
 
   const createDinner = useMutation(api.dinners.create);
@@ -112,7 +112,7 @@ export default function CreateDinnerModal() {
   const resetForm = useCallback(() => {
     setName("");
     setCategory("");
-    setEstimatedCost("");
+    setTag("");
     setCookingTimeMinutes("");
   }, []);
 
@@ -126,10 +126,9 @@ export default function CreateDinnerModal() {
     if (!trimmedName) return;
 
     const trimmedCategory = category.trim();
-    const trimmedCost = estimatedCost.trim();
+    const trimmedTag = tag.trim();
     const trimmedCookTime = cookingTimeMinutes.trim();
 
-    const parsedCost = trimmedCost ? Number.parseFloat(trimmedCost) : undefined;
     const parsedCookTime = trimmedCookTime
       ? Number.parseInt(trimmedCookTime, 10)
       : undefined;
@@ -137,7 +136,7 @@ export default function CreateDinnerModal() {
     await createDinner({
       name: trimmedName,
       category: trimmedCategory || undefined,
-      estimatedCost: Number.isFinite(parsedCost) ? parsedCost : undefined,
+      tag: trimmedTag || undefined,
       cookingTimeMinutes: Number.isFinite(parsedCookTime)
         ? parsedCookTime
         : undefined,
@@ -147,7 +146,7 @@ export default function CreateDinnerModal() {
   }, [
     name,
     category,
-    estimatedCost,
+    tag,
     cookingTimeMinutes,
     createDinner,
     handleClose,
@@ -199,11 +198,10 @@ export default function CreateDinnerModal() {
       </Field>
 
       <Field
-        label="Estimated Cost (optional)"
-        placeholder="e.g. 12.50"
-        value={estimatedCost}
-        onChangeText={setEstimatedCost}
-        keyboardType="decimal-pad"
+        label="Tag (optional)"
+        placeholder="e.g. Chicken, Vegetarian"
+        value={tag}
+        onChangeText={setTag}
       />
 
       <Field
