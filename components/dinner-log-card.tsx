@@ -52,12 +52,7 @@ export const DinnerLogCard = memo(function DinnerLogCard({
       asChild
     >
       <Pressable className={isCompact ? "w-65 mr-3" : "w-full"}>
-        <View
-          className="bg-white dark:bg-black p-3 border-2 border-black dark:border-white"
-          style={{
-            boxShadow: "3px 3px 0px 0px rgba(0,0,0,1)",
-          }}
-        >
+        <View className="bg-white dark:bg-black p-3 border-2 border-black dark:border-white">
           {/* Title */}
           <Text
             type="defaultSemiBold"

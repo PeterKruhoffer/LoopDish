@@ -113,7 +113,7 @@ const SuggestionsSection = memo(function SuggestionsSection({
         <SectionHeader.Root>
           <SectionHeader.Title>Suggestions</SectionHeader.Title>
         </SectionHeader.Root>
-        <View className="border-2 border-black dark:border-white">
+        <View className="py-2 border-2 border-black dark:border-white">
           <Text className="text-center uppercase tracking-wide text-(--color-gray)">
             No suggestions available
           </Text>

@@ -45,12 +45,7 @@ export const SuggestionCard = memo(function SuggestionCard({
       asChild
     >
       <Pressable className="w-full">
-        <View
-          className="flex-row items-center p-4 bg-white dark:bg-[#151718] border-l-4 border-black dark:border-white"
-          style={{
-            boxShadow: "2px 2px 0px 0px rgba(0,0,0,1)",
-          }}
-        >
+        <View className="flex-row items-center p-4 bg-white dark:bg-black border-l-4 border-black dark:border-white">
           {/* Content */}
           <View className="flex-1">
             <Text

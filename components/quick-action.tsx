@@ -20,11 +20,7 @@ interface QuickActionGridProps {
 }
 
 function QuickActionGrid({ children }: QuickActionGridProps) {
-  return (
-    <View className="flex-row gap-4 px-4">
-      {children}
-    </View>
-  );
+  return <View className="flex-row gap-4 px-4">{children}</View>;
 }
 
 // Individual action button
@@ -46,22 +42,15 @@ function QuickActionButton({
   return (
     <Pressable
       onPress={onPress}
-      className={`flex-1 h-[120px] justify-center items-center border-2 border-black dark:border-white ${
-        isPrimary
-          ? "bg-black dark:bg-white"
-          : "bg-white dark:bg-[#151718]"
+      className={`flex-1 h-30 justify-center items-center border-2 border-black dark:border-white ${
+        isPrimary ? "bg-black dark:bg-white" : "bg-white dark:bg-[#151718]"
       }`}
-      style={{
-        boxShadow: isPrimary
-          ? "4px 4px 0px 0px rgba(0,0,0,0.3)"
-          : "4px 4px 0px 0px rgba(0,0,0,1)",
-      }}
     >
-        <IconSymbol
-          name={icon as any}
-          size={32}
-          color={isPrimary ? "#fff" : "#000"}
-        />
+      <IconSymbol
+        name={icon as any}
+        size={32}
+        color={isPrimary ? "#fff" : "#000"}
+      />
       <Text
         className={`mt-2 text-sm uppercase tracking-wider font-bold ${
           isPrimary
@@ -94,16 +83,9 @@ function QuickActionLink({
   return (
     <Link href={href as any} asChild>
       <Pressable
-        className={`flex-1 h-[120px] justify-center items-center border-2 border-black dark:border-white ${
-          isPrimary
-            ? "bg-black dark:bg-white"
-            : "bg-white dark:bg-[#151718]"
+        className={`flex-1 h-30 justify-center items-center border-2 border-black dark:border-white ${
+          isPrimary ? "bg-black dark:bg-white" : "bg-white dark:bg-black"
         }`}
-        style={{
-          boxShadow: isPrimary
-            ? "4px 4px 0px 0px rgba(0,0,0,0.3)"
-            : "4px 4px 0px 0px rgba(0,0,0,1)",
-        }}
       >
         <IconSymbol
           name={icon as any}
