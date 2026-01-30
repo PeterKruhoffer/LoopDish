@@ -35,21 +35,9 @@ export default function History() {
     dinnerId ? { dinnerId: dinnerId as any } : {},
   );
 
-  const logsWithDinner = useMemo(() => {
-    return (historyLogs ?? []).filter((log) => log.dinner);
-  }, [historyLogs]);
-
-  const dinnerName = useMemo(() => {
-    if (!dinnerId) return null;
-    return logsWithDinner[0]?.dinner?.name ?? null;
-  }, [dinnerId, logsWithDinner]);
+  const logsWithDinner = (historyLogs ?? []).filter((log) => log.dinner);
 
   const isFiltered = Boolean(dinnerId);
-  const subtitle = isFiltered
-    ? dinnerName
-      ? `History for ${dinnerName}`
-      : "Filtered history"
-    : "Every dish you've made";
 
   const emptyTitle = isFiltered
     ? "No meals for this dish yet"
@@ -75,7 +63,6 @@ export default function History() {
             rating={item.rating}
             notes={item.notes}
             variant="full"
-            href={{ pathname: "/history/[id]", params: { id: item._id } }}
           />
         </View>
       );
@@ -90,11 +77,6 @@ export default function History() {
   return (
     <View className="flex-1 bg-white dark:bg-black">
       <View className="flex-1 px-4 pt-4">
-        <View className="mb-3">
-          <Text className="text-xs uppercase tracking-wide text-(--color-gray)">
-            {subtitle}
-          </Text>
-        </View>
         <LegendList
           data={logsWithDinner}
           keyExtractor={(item) => item._id}
