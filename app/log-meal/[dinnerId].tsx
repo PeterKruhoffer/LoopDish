@@ -96,7 +96,7 @@ export default function LogMealDetailsScreen() {
         <Text className="text-xs uppercase tracking-wide text-(--color-gray) text-center mt-2">
           Go back and choose a dinner to log
         </Text>
-        <Link href={"/log-meal-modal" as const} replace asChild>
+        <Link href={"/log-meal" as const} replace asChild>
           <Pressable className="mt-4 border-2 border-black dark:border-white px-3 py-2">
             <Text className="text-xs uppercase tracking-wider font-bold">
               Back to list
@@ -129,7 +129,7 @@ export default function LogMealDetailsScreen() {
         <Text className="text-xs uppercase tracking-wide text-(--color-gray) text-center mt-2">
           It may have been removed
         </Text>
-        <Link href={"/log-meal-modal" as const} replace asChild>
+        <Link href={"/log-meal" as const} replace asChild>
           <Pressable className="mt-4 border-2 border-black dark:border-white px-3 py-2">
             <Text className="text-xs uppercase tracking-wider font-bold">
               Back to list
@@ -151,7 +151,7 @@ export default function LogMealDetailsScreen() {
         <Text className="text-xl uppercase tracking-wide font-bold mt-1">
           {dinner.name}
         </Text>
-        <Link href={"/log-meal-modal" as const} replace asChild>
+        <Link href={"/log-meal" as const} replace asChild>
           <Pressable className="mt-3 border-2 border-black dark:border-white px-3 py-2 self-start">
             <Text className="text-xs uppercase tracking-wider font-bold">
               Change Dinner

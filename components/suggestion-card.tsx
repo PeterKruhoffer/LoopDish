@@ -39,7 +39,7 @@ export const SuggestionCard = memo(function SuggestionCard({
   return (
     <Link
       href={{
-        pathname: "/log-meal-modal/[dinnerId]" as const,
+        pathname: "/log-meal/[dinnerId]" as const,
         params: { dinnerId: id },
       }}
       asChild

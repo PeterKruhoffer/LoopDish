@@ -24,7 +24,7 @@ const DinnerSelectorItem = memo(function DinnerSelectorItem({
   return (
     <Link
       href={{
-        pathname: "/log-meal-modal/[dinnerId]" as const,
+        pathname: "/log-meal/[dinnerId]" as const,
         params: { dinnerId: id },
       }}
       asChild
@@ -48,7 +48,7 @@ const DinnerSelectorItem = memo(function DinnerSelectorItem({
   );
 });
 
-export default function LogMealModalIndex() {
+export default function LogMealIndex() {
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   const allDinners = useQuery(api.dinners.getAll) ?? [];

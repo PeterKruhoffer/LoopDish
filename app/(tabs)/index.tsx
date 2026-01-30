@@ -200,13 +200,13 @@ export default function Index() {
 
       {/* SECTION 2: Suggestions */}
       <SuggestionsSection suggestions={suggestions ?? []} />
-      <Link href="/log-meal-modal/">
+      <Link href="/log-meal/">
         <Text>Test link</Text>
       </Link>
 
       {/* SECTION 3: Quick Actions */}
       <QuickActionsSection
-        logMealHref="/log-meal-modal"
+        logMealHref="/log-meal"
         createDinnerHref="/create-dinner-modal"
       />
 

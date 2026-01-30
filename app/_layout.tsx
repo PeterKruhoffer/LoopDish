@@ -36,11 +36,11 @@ export default function RootLayout() {
           options={{ presentation: "formSheet", title: "Create" }}
         />
         <Stack.Screen
-          name="log-meal-modal/index"
+          name="log-meal/index"
           options={{ title: "Log Meal", headerBackTitle: "Home" }}
         />
         <Stack.Screen
-          name="log-meal-modal/[dinnerId]"
+          name="log-meal/[dinnerId]"
           options={{ title: "Meal Details" }}
         />
       </Stack>
