@@ -5,11 +5,20 @@ import { useCSSVariable } from "uniwind";
 
 export default function TabLayout() {
   const tabActiveColor = useCSSVariable("--color-tab-active");
+  const headerBackground = useCSSVariable("--color-header-background");
+  const headerText = useCSSVariable("--color-header-text");
 
   return (
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: tabActiveColor as string,
+        tabBarStyle: {
+          backgroundColor: headerBackground as string,
+        },
+        headerStyle: {
+          backgroundColor: headerBackground as string,
+        },
+        headerTintColor: headerText as string,
         headerShown: false,
         tabBarButton: HapticTab,
       }}

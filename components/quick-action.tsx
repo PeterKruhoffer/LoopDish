@@ -1,6 +1,6 @@
 import { Text } from "@/components/themed-text";
 import { View } from "@/components/themed-view";
-import { Pressable } from "react-native";
+import { Pressable, useColorScheme } from "react-native";
 import { Link } from "expo-router";
 import { memo } from "react";
 import { IconSymbol } from "@/components/ui/icon-symbol.ios";
@@ -38,6 +38,9 @@ function QuickActionButton({
   onPress,
 }: QuickActionButtonProps) {
   const isPrimary = variant === "primary";
+  const colorScheme = useColorScheme() ?? "light";
+  const isDark = colorScheme === "dark";
+  const iconColor = isPrimary ? (isDark ? "#000" : "#fff") : isDark ? "#fff" : "#000";
 
   return (
     <Pressable
@@ -49,7 +52,7 @@ function QuickActionButton({
       <IconSymbol
         name={icon as any}
         size={32}
-        color={isPrimary ? "#fff" : "#000"}
+        color={iconColor}
       />
       <Text
         className={`mt-2 text-sm uppercase tracking-wider font-bold ${
@@ -79,6 +82,9 @@ function QuickActionLink({
   variant = "secondary",
 }: QuickActionLinkProps) {
   const isPrimary = variant === "primary";
+  const colorScheme = useColorScheme() ?? "light";
+  const isDark = colorScheme === "dark";
+  const iconColor = isPrimary ? (isDark ? "#000" : "#fff") : isDark ? "#fff" : "#000";
 
   return (
     <Link href={href as any} asChild>
@@ -90,7 +96,7 @@ function QuickActionLink({
         <IconSymbol
           name={icon as any}
           size={32}
-          color={isPrimary ? "#fff" : "#000"}
+          color={iconColor}
         />
         <Text
           className={`mt-2 text-sm uppercase tracking-wider font-bold ${
