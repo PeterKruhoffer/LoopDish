@@ -5,9 +5,6 @@ import { Link } from "expo-router";
 import { memo } from "react";
 import { DateTime } from "luxon";
 
-// Brutalist suggestion card
-// Following vercel-react-native-skills: list-performance-item-memo
-
 interface SuggestionCardProps {
   id: string;
   name: string;

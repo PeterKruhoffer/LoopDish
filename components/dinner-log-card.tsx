@@ -7,10 +7,6 @@ import { IconSymbol } from "@/components/ui/icon-symbol.ios";
 import { useCSSVariable } from "uniwind";
 import { DateTime } from "luxon";
 
-// Brutalist card component for dinner log entries
-// Following vercel-react-native-skills: list-performance-item-memo
-// Primitive props only for efficient re-rendering
-
 interface DinnerLogCardProps {
   id: string;
   dinnerId: string;

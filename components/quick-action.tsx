@@ -5,16 +5,6 @@ import { Link } from "expo-router";
 import { memo } from "react";
 import { IconSymbol } from "@/components/ui/icon-symbol.ios";
 
-// Brutalist quick action buttons using compound component pattern
-// Following vercel-composition-patterns: architecture-compound-components
-
-// Context for quick action styling
-interface QuickActionContextValue {
-  variant: "primary" | "secondary";
-  onPress?: () => void;
-}
-
-// Root component that determines layout
 interface QuickActionGridProps {
   children: React.ReactNode;
 }
@@ -23,7 +13,6 @@ function QuickActionGrid({ children }: QuickActionGridProps) {
   return <View className="flex-row gap-4 px-4">{children}</View>;
 }
 
-// Individual action button
 interface QuickActionButtonProps {
   icon: string;
   label: string;
@@ -40,7 +29,13 @@ function QuickActionButton({
   const isPrimary = variant === "primary";
   const colorScheme = useColorScheme() ?? "light";
   const isDark = colorScheme === "dark";
-  const iconColor = isPrimary ? (isDark ? "#000" : "#fff") : isDark ? "#fff" : "#000";
+  const iconColor = isPrimary
+    ? isDark
+      ? "#000"
+      : "#fff"
+    : isDark
+      ? "#fff"
+      : "#000";
 
   return (
     <Pressable
@@ -49,11 +44,7 @@ function QuickActionButton({
         isPrimary ? "bg-black dark:bg-white" : "bg-white dark:bg-[#151718]"
       }`}
     >
-      <IconSymbol
-        name={icon as any}
-        size={32}
-        color={iconColor}
-      />
+      <IconSymbol name={icon as any} size={32} color={iconColor} />
       <Text
         className={`mt-2 text-sm uppercase tracking-wider font-bold ${
           isPrimary
@@ -84,7 +75,13 @@ function QuickActionLink({
   const isPrimary = variant === "primary";
   const colorScheme = useColorScheme() ?? "light";
   const isDark = colorScheme === "dark";
-  const iconColor = isPrimary ? (isDark ? "#000" : "#fff") : isDark ? "#fff" : "#000";
+  const iconColor = isPrimary
+    ? isDark
+      ? "#000"
+      : "#fff"
+    : isDark
+      ? "#fff"
+      : "#000";
 
   return (
     <Link href={href as any} asChild>
@@ -93,11 +90,7 @@ function QuickActionLink({
           isPrimary ? "bg-black dark:bg-white" : "bg-white dark:bg-black"
         }`}
       >
-        <IconSymbol
-          name={icon as any}
-          size={32}
-          color={iconColor}
-        />
+        <IconSymbol name={icon as any} size={32} color={iconColor} />
         <Text
           className={`mt-2 text-sm uppercase tracking-wider font-bold ${
             isPrimary

@@ -4,9 +4,6 @@ import { Pressable } from "react-native";
 import { Link, type Href } from "expo-router";
 import { memo } from "react";
 
-// Compound component pattern for section headers
-// Following vercel-composition-patterns: architecture-compound-components
-
 interface SectionHeaderRootProps {
   children: React.ReactNode;
 }
@@ -51,7 +48,6 @@ function SectionHeaderAction({ href, label }: SectionHeaderActionProps) {
   );
 }
 
-// Export as compound component
 export const SectionHeader = {
   Root: memo(SectionHeaderRoot),
   Title: memo(SectionHeaderTitle),

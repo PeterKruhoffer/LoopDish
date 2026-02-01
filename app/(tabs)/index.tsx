@@ -6,17 +6,10 @@ import { api } from "@/convex/_generated/api";
 import { ScrollView } from "react-native";
 import { LegendList } from "@legendapp/list";
 import { memo } from "react";
-
-// Components
 import { SectionHeader } from "@/components/section-header";
 import { DinnerLogCard } from "@/components/dinner-log-card";
 import { SuggestionCard } from "@/components/suggestion-card";
 import { QuickAction } from "@/components/quick-action";
-import { Link } from "expo-router";
-
-// SECTION 1: Recent Meals Component
-// Using LegendList with horizontal layout for recent meals
-// Following vercel-react-native-skills: list-performance-virtualize
 
 interface RecentMealsSectionProps {
   meals: {
