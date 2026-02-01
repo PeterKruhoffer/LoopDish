@@ -14,6 +14,7 @@ export default function RootLayout() {
 
   return (
     <ConvexProvider client={convex}>
+      <StatusBar style="auto" />
       <Stack
         screenOptions={{
           headerStyle: {
@@ -22,7 +23,6 @@ export default function RootLayout() {
           headerTintColor: headerText as string,
         }}
       >
-        <StatusBar style="auto" />
         <Stack.Screen
           name="(tabs)"
           options={{ title: "LoopDish", headerShown: false }}
